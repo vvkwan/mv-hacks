@@ -33,7 +33,7 @@ const WebcamCapture = () => {
             mirrored={true}
             height={600}
             ref={webcamRef}
-            screenshotFormat="image/jpeg"
+            screenshotFormat="image/png"
             width={1280}
           />
         ) : (
@@ -44,3 +44,4 @@ const WebcamCapture = () => {
     );
   };
   export default WebcamCapture;
+  // export { imgSrc }; 
