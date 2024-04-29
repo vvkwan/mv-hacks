@@ -37,8 +37,16 @@
   }
 }
 
+p{
+  color: #FFFFFF
+}
+
+button {
+  width: 1280;
+  height: 600;
+}
+
 img {
   width: 1280;
-  object-fit: cover;
   height: 600;
 }

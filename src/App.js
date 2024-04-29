@@ -1,16 +1,21 @@
 import './App.css';
-import WebcamCapture from './webcam';
+import WebcamCapture from './components/webcam';
 import Gemini from './geminiComp';
+import {ImgContext} from "./Context.js";
+import React, { useState } from "react";
 
-function App() {
+// export const routes = [{path: '/', name: 'Home', component: <Home />}];
+
+export default function App() {
+  const [imgSrc, setImgSrc] = useState(null);
   return (
     <div className="App">
       <header className="App-header">
-      <WebcamCapture />
-      {/* <Gemini /> */}
-      </header>
+    <ImgContext.Provider value= {{ imgSrc, setImgSrc }}>
+       <WebcamCapture />
+       {<Gemini /> }
+    </ImgContext.Provider>
+    </header>
     </div>
   );
 }
-
-export default App;

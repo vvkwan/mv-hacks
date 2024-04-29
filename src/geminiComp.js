@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getBase64 } from './imageHelper';
+import { ImgContext } from "./Context";
 // import { GEMINI_API_KEY } from '../core/config';
 
 const AiwithImage = () => {
     const genAI = new GoogleGenerativeAI("AIzaSyA8xpePRCL_zqFgdYZH7BisU79NL5g0JgE");
 
     const [image, setImage] = useState('');
+    const { imgSrc } = useContext(ImgContext);
     const [imageInineData, setImageInlineData] = useState('');
     const [aiResponse, setResponse] = useState('');
     const [loading, setLoading] = useState(false);
@@ -16,9 +18,22 @@ const AiwithImage = () => {
         if (imageInineData) {
             aiImageRun();
         }
-        // aiImageRun();
-      }, [imageInineData]); // <- add the count variable here
-
+      }, [imageInineData]);
+      
+      useEffect (() => {
+        console.log("imgSrc is changing", imgSrc)
+        if(imgSrc){
+            let tempImageObject = {
+                inlineData: {
+                data: imgSrc.substring(imgSrc.indexOf(",")+1),
+                mimeType: imgSrc.substring(imgSrc.indexOf(":")+1, imgSrc.indexOf(";"))
+                 }
+            }
+            console.log("tempImageObject", tempImageObject);
+            setImageInlineData(tempImageObject);
+        }
+        
+    }, [imgSrc]);
     /**
      * Generative AI Call to fetch image insights
      */
@@ -56,6 +71,7 @@ const AiwithImage = () => {
     }
 
     // Converts a File object to a GoogleGenerativeAI.Part object.
+
     async function fileToGenerativePart(file) {
         const base64EncodedDataPromise = new Promise((resolve) => {
             const reader = new FileReader();
@@ -72,10 +88,10 @@ const AiwithImage = () => {
 
     return (
         <div>
-
             <div>
                 <div style={{ display: 'flex' }}>
-                    <input type='file' onChange={(e) => handleImageChange(e)} />                </div>
+                    {/* <input type='file' onChange={(e) => handleImageChange(e)} />               */}
+                      </div>
                 <img src={image} style={{ width: '30%', marginTop: 30 }} />
             </div>
 
