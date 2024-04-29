@@ -27,12 +27,20 @@ const Home = () => {
         const text = response.text();
         setResponse(text);
       }
+
       useEffect(() => {
         // Check if imgSrc has changed
-        if (imgSrc !== null) {
+        if (imgSrc) {
           run();
         }
       }, [imgSrc]) 
+
+      useEffect(() => {
+        if(data){
+        let utterance = new SpeechSynthesisUtterance(data);
+        speechSynthesis.speak(utterance);
+        }
+      }, [data])
   
     return (
         <div>
