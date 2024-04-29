@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ImgContext } from "../Context";
-import { getBase64 } from '../imageHelper';
+import { PicContext } from "../Context";
 
 const Home = () => {
     const { imgSrc, setImgSrc } = useContext(ImgContext);
