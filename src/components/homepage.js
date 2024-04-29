@@ -15,16 +15,16 @@ const Home = () => {
     
 
     // Converts a File object to a GoogleGenerativeAI.Part object.
-    async function fileToGenerativePart(imgSrc) {
-      const base64EncodedDataPromise = new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result.split(',')[1]);
-        reader.readAsDataURL(imgSrc);
-      });
-      return {
-        inlineData: { data: await base64EncodedDataPromise, mimeType: imgSrc.type },
-      };
-    }
+    // async function fileToGenerativePart(imgSrc) {
+    //   const base64EncodedDataPromise = new Promise((resolve) => {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => resolve(reader.result.split(',')[1]);
+    //     reader.readAsDataURL(imgSrc);
+    //   });
+    //   return {
+    //     inlineData: { data: await base64EncodedDataPromise, mimeType: imgSrc.type },
+    //   };
+    // }
     
     async function run() {
       // For text-and-images input (multimodal), use the gemini-pro-vision model
