@@ -1,7 +1,7 @@
 import Webcam from "react-webcam";
 import React, {useState, useRef, useCallback } from "react";
 
-const WebcamCapture = () => {
+const WebcamCapture = ({ onCapture }) => {
     const webcamRef = useRef(null);
     const [currentState, setCurrentState] = useState("capturing");
     const [imgSrc, setImgSrc] = useState(null);
