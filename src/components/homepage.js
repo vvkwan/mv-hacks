@@ -5,29 +5,42 @@ import { getBase64 } from '../imageHelper';
 
 const Home = () => {
     const { imgSrc, setImgSrc } = useContext(ImgContext);
-    const genAI = new GoogleGenerativeAI(process.env.GEM_API_KEY);
+    const genAI = new GoogleGenerativeAI('AIzaSyA8xpePRCL_zqFgdYZH7BisU79NL5g0JgE');
     const [data, setResponse] = useState('');
-    const [image, setImage] = useState('');
-    const [imageInineData, setImageInlineData] = useState('');
 
-    async function aiImageRun() {
-        setResponse('');
-        const model = genAI.getGenerativeModel({model: "gemini-pro-vision"});
-        // const binaryData = atob(imgSrc);
-        // const image = JSON.parse(binaryData);
-        const result = await model.generateContent([
-            "tell me what in this image", imgSrc
-        ]);
+    async function fileToGenerativePart(imgSrc) {
+        const base64EncodedDataPromise = new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result.split(',')[1]);
+          reader.readAsDataURL(imgSrc);
+        });
+        return {
+          inlineData: { data: await base64EncodedDataPromise, mimeType: imgSrc.type },
+        };
+      }
+      
+      async function run() {
+        const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
-        //embedded
+        const prompt = "tell me what in this image";
+      
+      const image = {
+          inlineData: {
+            data: imgSrc,
+            mimeType: "image/png",
+          },
+        };
+  
+        const result = await model.generateContent([prompt, image]);
         const response = await result.response;
         const text = response.text();
         setResponse(text);
-    }
-
-    useEffect(() => {
-        aiImageRun()
-    }, []);
+      }
+  
+  
+      useEffect(() => {
+        run() 
+      }, [data]) 
     /*
     const handleImageChange = (e) => {
         const file = e.target.files[0];
