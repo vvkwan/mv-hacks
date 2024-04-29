@@ -1,25 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import WebcamCapture from './components/webcam';
+import Home from './components/homepage';
+import {ImgContext} from "./Context.js";
+import React, { useState } from "react";
 
-function App() {
+// export const routes = [{path: '/', name: 'Home', component: <Home />}];
+
+export default function App() {
+  const [imgSrc, setImgSrc] = useState(null);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ImgContext.Provider value= {{ imgSrc, setImgSrc }}>
+       <WebcamCapture />
+       <Home/>
+    </ImgContext.Provider>
+    </header>
     </div>
   );
 }
-
-export default App;

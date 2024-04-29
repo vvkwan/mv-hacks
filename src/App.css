@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+p{
+  color: #FFFFFF
+}
+
+button {
+  width: 1280px;
+  height: 600px;
+}
+
+img {
+  width: 770px;
+  height: 600px;
+}
