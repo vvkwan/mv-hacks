@@ -6,19 +6,22 @@ import { getBase64 } from '../imageHelper';
 const Home = () => {
     const { imgSrc, setImgSrc } = useContext(ImgContext);
     const genAI = new GoogleGenerativeAI('AIzaSyA8xpePRCL_zqFgdYZH7BisU79NL5g0JgE');
-    const [data, setResponse] = useState('');
-      
+    const [data, setResponse] = useState('');    
+
       async function run() {
         const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
         const prompt = "tell me what in this image";
       
+        console.log("imgSrc", imgSrc);
         let tempImageObject = {
             inlineData: {
             data: imgSrc.substring(imgSrc.indexOf(",")+1),
             mimeType: imgSrc.substring(imgSrc.indexOf(":")+1, imgSrc.indexOf(";"))
              }
         }
+        console.log("tempImageObject", tempImageObject);
+
         const result = await model.generateContent([prompt, tempImageObject]);
         const response = await result.response;
         const text = response.text();
@@ -33,7 +36,7 @@ const Home = () => {
   
     return (
         <div>
-        <p>Generated Text {data}</p>
+        <p>Generated Text: {data}</p>
         </div>
       );
 };
